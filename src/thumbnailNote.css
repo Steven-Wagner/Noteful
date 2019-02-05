@@ -1,0 +1,19 @@
+.thumbnail-note {
+    margin: 15px;
+    height: 75px;
+    border: 1px solid black;
+    text-align: left;
+    padding-left: 15px;
+}
+
+ul .thumbnail-note:first-child {
+    margin-top: 0;
+}
+
+.thumbnail-note:hover {
+    cursor: pointer;
+}
+
+.note-title {
+    font-size: 1.5em;
+}

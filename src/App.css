@@ -1,32 +1,76 @@
-.App {
+* {
+  box-sizing: border-box;
+}
+
+body {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.content {
+  display: flex;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+a:visited {
+  text-decoration: none;
+  color: black;
+}
+
+.sidebar {
+  flex: 1 1;
+}
+
+main {
+  text-align: center;
+  flex: 4 1;
+  margin: 10px;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+h1 {
+  text-align: center;
+  border-bottom: 1px solid black;
+}
+
+.active{
+  background-color: lightblue;
+}
+
+.folders {
+  height: 50px;
+  width: 100%;
+  border: 1px solid black;
+  margin: 5px;
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+.folders a {
+  display: block;
+  height: 48px;
+
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.selected-folder {
+  margin: 10px;
 }
 
-.App-link {
-  color: #61dafb;
+.current-folder {
+  font-size: 2em;
+  padding:10px;
+  text-align: right;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.selected-folder button {
+  width: 100%;
+  height: 25px;
 }
