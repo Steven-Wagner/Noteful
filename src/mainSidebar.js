@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import NotefulContext from './NotefulContext';
+
 
 function FolderThumbnail(props) {
     return (<li className="folders">
@@ -7,15 +9,22 @@ function FolderThumbnail(props) {
     </li>)
 }
 
-export default function MainSidebar(props) {
+export default class  MainSidebar extends React.Component {
+
+    static contextType = NotefulContext
+
+    render() {
     
-    const folders = props.data.folders.map((folder)=>{
+    console.log('will this even log', this.context);
+    
+    const folders = this.context.folders.map((folder)=>{
         return <FolderThumbnail data={folder} key={folder.id} />
     })
 
-    return (
-        <ul>
-            {folders}
-        </ul>
-    )
+        return (
+            <ul>
+                {folders}
+            </ul>
+        )
+    }
 }

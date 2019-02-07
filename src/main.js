@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ThumbnailNote from './thumbnailNote';
+import NotefulContext from './NotefulContext'
 
-export default function MainMain(props) {
+export default class MainMain extends Component {
 
-    const notes = props.data.notes.map((note)=> {
-        return <ThumbnailNote data={note} key={note.id} />
-    })
+    static contextType = NotefulContext;
 
-    return (
-        <ul>
-            {notes}
-        </ul>
-    )
+    render() {
+        console.log(this.context);
+        const notes = this.context.notes.map((note)=> {
+            return <ThumbnailNote data={note} key={note.id} id={note.id} />
+        })
+
+        return (
+            <ul>
+                {notes}
+            </ul>
+        )
+    }
 }

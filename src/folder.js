@@ -1,17 +1,23 @@
 import React from 'react';
 import ThumbnailNote from './thumbnailNote';
+import NotefulContext from './NotefulContext';
 
-export default function Folder (props) {
-    const notes = props.data.notes.filter(note=>{
-        return note.folderId === props.match.params.folderId;
-    })
-    .map(thisFoldersNote=>{
-        return <ThumbnailNote data={thisFoldersNote} key={thisFoldersNote.id} />
-    })
+export default class Folder extends React.Component {
 
-    return (
-        <ul>
-            {notes}
-        </ul>
-    )
+    static contextType = NotefulContext;
+
+    render() {
+        const notes = this.context.notes.filter(note=>{
+            return note.folderId === this.props.match.params.folderId;
+        })
+        .map(thisFoldersNote=>{
+            return <ThumbnailNote data={thisFoldersNote} key={thisFoldersNote.id} />
+        })
+
+        return (
+            <ul>
+                {notes}
+            </ul>
+        )
+    }
 }

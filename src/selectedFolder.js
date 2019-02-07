@@ -1,29 +1,35 @@
 import React from 'react';
+import NotefulContext from './NotefulContext';
 
-function SelectedFolder(props) {
+class SelectedFolder extends React.Component {
 
-    const currentNote = props.data.notes.find(note=>{
-        return note.id === props.match.params.noteId
-    })
+    static contextType = NotefulContext;
 
-    const currentFolder = props.data.folders.find(folder=> {
-        return folder.id === currentNote.folderId
-    })
+    render() {
+
+        const currentNote = this.context.notes.find(note=>{
+            return note.id === this.props.match.params.noteId
+        })
+        const currentFolder = this.context.folders.find(folder=> {
+            return folder.id === currentNote.folderId
+        })
+
+            
         
-    
 
-    return (
-        <div className="selected-folder">
-            <div className="current-folder">
-                {currentFolder.name}
+        return (
+            <div className="selected-folder">
+                <div className="current-folder">
+                    {currentFolder.name}
+                </div>
+                <div>
+                    <button onClick={()=>this.props.history.goBack()}>
+                        Back
+                    </button>
+                </div>
             </div>
-            <div>
-                <button onClick={()=>props.history.goBack()}>
-                    Back
-                </button>
-            </div>
-        </div>
-    )
+        )
+    }
 }
 
 export default SelectedFolder

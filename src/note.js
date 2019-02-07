@@ -1,20 +1,29 @@
 import React from 'react';
 import ThumbnailNote from './thumbnailNote';
+import NotefulContext from './NotefulContext';
 
-export default function Note(props) {
+export default class Note extends React.Component {
 
-    const note = props.data.notes.find(checkNote =>{
-        return checkNote.id === props.match.params.noteId
-    })
+    static contextType = NotefulContext;
 
-    return (
-        <div>
-            <div className="thumbnail">
-                <ThumbnailNote data={note} key={note.id} />
-            </div>
+    render() {
+
+        let note = this.context.notes.find(checkNote =>{
+            return checkNote.id === this.props.match.params.noteId
+        })
+        if(!note) {
+            note=''
+        }
+
+        return (
             <div>
-                {note.content}
+                <div className="thumbnail">
+                    <ThumbnailNote data={note} key={note.id} id={note.id}/>
+                </div>
+                <div>
+                    {note.content}
+                </div> 
             </div>
-        </div>
-    )
+        )
+    }
 }
