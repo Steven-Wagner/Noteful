@@ -1,0 +1,20 @@
+* {
+    box-sizing: border-box;
+}
+
+.folder-name {
+    margin: 20px;
+}
+
+.folder-name label {
+    font-size: 2em;
+}
+
+.folder-name input {
+    height: 2em;
+    font-size: 20px;
+}
+
+button {
+    height: 2em;
+}

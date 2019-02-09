@@ -7,6 +7,8 @@ import MainSidebar from'./mainSidebar';
 import Folder from './folder';
 import SelectedFolder from './selectedFolder';
 import Note from './note';
+import AddFolder from './AddFolder';
+import AddNote from './AddNote';
 
 class App extends Component {
 
@@ -27,6 +29,20 @@ class App extends Component {
     })
   }
 
+  addFolder = newFolder => {
+    this.setState({
+      folders: [{id:newFolder, name:newFolder}, ...this.state.folders]
+    })
+  }
+
+  addNote = (noteName, noteContent, noteFolderId) => {
+    let modDate = new Date();
+    modDate = modDate.toISOString()
+
+    this.setState({
+      notes: [...this.state.notes, {id: noteName, name: noteName, content: noteContent, folderId: noteFolderId, modified: modDate}]
+    })
+  }
 
   componentDidMount() {
     const fetchFolders = fetch('http://localhost:9090/folders', {
@@ -77,10 +93,10 @@ class App extends Component {
     const contextValue = {
       folders: this.state.folders,
       notes: this.state.notes,
-      deleteNote: this.deleteNote
+      deleteNote: this.deleteNote,
+      addFolder: this.addFolder,
+      addNote: this.addNote
   }
-
-  console.log('thisis the contxt of notes', contextValue.notes)
 
     return (
       <div className="App">
@@ -89,6 +105,7 @@ class App extends Component {
         </header>
         <div className="content">
           <NotefulContext.Provider value={contextValue}>
+          {/*would I turn this Nav eleemnt into a variable and then place it here as a single line?*/}
             <nav role="navigation" className="sidebar">
               <Route 
                 exact path="/"
@@ -115,6 +132,14 @@ class App extends Component {
               <Route
                 path="/note/:noteId"
                 component={Note}
+              />
+              <Route
+                path="/newfolder"
+                component={AddFolder}
+              />
+              <Route
+                path="/addnote"
+                component={AddNote}
               />
             </main>
           </NotefulContext.Provider>

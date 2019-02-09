@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import NotefulContext from './NotefulContext';
+import FolderError from './FolderError';
+import PropTypes from 'prop-types';
 
 
 function FolderThumbnail(props) {
@@ -9,22 +11,30 @@ function FolderThumbnail(props) {
     </li>)
 }
 
-export default class  MainSidebar extends React.Component {
+FolderThumbnail.propTypes = {
+    data: PropTypes.exact({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired
+    })
+};
+
+class  MainSidebar extends React.Component {
 
     static contextType = NotefulContext
 
     render() {
     
-    console.log('will this even log', this.context);
-    
     const folders = this.context.folders.map((folder)=>{
-        return <FolderThumbnail data={folder} key={folder.id} />
+        return <FolderError key={folder.id}><FolderThumbnail data={folder} key={folder.id} /></FolderError>
     })
 
         return (
             <ul>
                 {folders}
+                {<button onClick={() => this.props.history.push('/newfolder')}>Add Folder</button>}
             </ul>
         )
     }
 }
+
+export default MainSidebar;

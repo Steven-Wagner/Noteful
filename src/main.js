@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ThumbnailNote from './thumbnailNote';
 import NotefulContext from './NotefulContext'
+import NoteError from './NoteError';
 
 export default class MainMain extends Component {
 
@@ -9,12 +10,13 @@ export default class MainMain extends Component {
     render() {
         console.log(this.context);
         const notes = this.context.notes.map((note)=> {
-            return <ThumbnailNote data={note} key={note.id} id={note.id} />
+            return <NoteError key={note.id}><ThumbnailNote data={note} key={note.id} id={note.id} /></NoteError>
         })
 
         return (
             <ul>
                 {notes}
+                <button onClick={()=>this.props.history.push('addnote')}>Add Note</button>
             </ul>
         )
     }
