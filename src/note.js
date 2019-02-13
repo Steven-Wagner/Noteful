@@ -10,10 +10,7 @@ export default class Note extends React.Component {
 
         let note = this.context.notes.find(checkNote =>{
             return checkNote.id === this.props.match.params.noteId
-        })
-        if(!note) {
-            note=''
-        }
+        })||"";
 
         return (
             <div>

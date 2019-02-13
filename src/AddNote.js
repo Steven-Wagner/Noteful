@@ -84,7 +84,6 @@ export default class AddNote extends Component {
     }
 
     validateForm() {
-        console.log(this.state.validateAll);
         this.setState({
             validateAll: this.state.validName && this.state.validContent && this.state.validFolder
         })
@@ -92,12 +91,11 @@ export default class AddNote extends Component {
 
     addNewNote(e) {
         e.preventDefault();
-        let modDate = new Date();
-        modDate = modDate.toISOString()
+        let modDate = new Date().toISOString();
         const noteFolderId = this.context.folders.find(folder=>{
             return folder.name === this.state.folder
         }).id
-        const newNote = JSON.stringify({name: this.state.name, folderId: noteFolderId, content: this.state.content, modified: modDate})
+        const newNote = JSON.stringify({name: this.state.name, folderId: noteFolderId, id: this.state.name, content: this.state.content, modified: modDate})
         fetch('http://localhost:9090/notes', {
             method: 'POST',
             body: newNote,
@@ -106,20 +104,24 @@ export default class AddNote extends Component {
             }
         })
         .then(response => {
-            if (!response.ok){
-                return response.json().then(error => {
-                    throw error
-                })
+            if (response.ok){
+                return response.json()
             }
+            throw new Error('Something went wrong')
         })
         .then(jres => {
             this.context.addNote(this.state.name, this.state.content, noteFolderId)
             this.props.history.goBack();
         })
+        .catch(err => {
+            console.log(err.message);
+            if (err.message === 'Failed to fetch') {
+                console.log('Did you start the noteful-json-server at localhost:9090?')
+            }
+        })
     }
 
     render() {
-//will I need a key? 
         const folderOptions = this.context.folders.map((folder, i) => {
             return <option value={folder.name} key={i}>{folder.name}</option>
         })

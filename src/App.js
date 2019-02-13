@@ -45,6 +45,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    console.log('component mounting');
     const fetchFolders = fetch('http://localhost:9090/folders', {
       method: 'GET',
       headers: {
@@ -76,7 +77,6 @@ class App extends Component {
       return response.json()
     })
     .then(jresponse=> {
-      console.log(jresponse);
       this.setState({
         notes: jresponse
       })
@@ -85,6 +85,9 @@ class App extends Component {
     Promise.all([fetchFolders, fetchNotes])
       .catch(err=>{
         console.log(err.message);
+        if (err.message === 'Failed to fetch') {
+          console.log('Did you start the noteful-json-server at localhost:9090?')
+        }
       }) 
   }
 
@@ -105,7 +108,6 @@ class App extends Component {
         </header>
         <div className="content">
           <NotefulContext.Provider value={contextValue}>
-          {/*would I turn this Nav eleemnt into a variable and then place it here as a single line?*/}
             <nav role="navigation" className="sidebar">
               <Route 
                 exact path="/"

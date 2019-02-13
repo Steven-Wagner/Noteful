@@ -24,7 +24,6 @@ export default class AddFolders extends Component {
     }
 
     validateFolderName(fieldValue) {
-        console.log('why?', this.context);
         let fieldErrors = {...this.state.validationMessage};
         let hasError = false;
     
@@ -60,15 +59,20 @@ export default class AddFolders extends Component {
             },
             })
             .then(response=>{
-                if (!response.ok) {
-                    return response.json().then(error => {
-                      throw error
-                    })
+                if (response.ok) {
+                    return response.json()
                   }
+                throw new Error('Sorry, something went wrong.')
             })
             .then(jres => {
                 addFolder(this.state.newFolder);
                 this.props.history.goBack();
+            })
+            .catch(err => {
+                console.log(err.message);
+                if (err.message === 'Failed to fetch') {
+                    console.log('Did you start the noteful-json-server at localhost:9090?')
+                }
             })
     }
 

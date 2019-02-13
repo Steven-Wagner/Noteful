@@ -25,7 +25,7 @@ function clickedDelete(event, noteId, deleteNoteCallback) {
             
         })
         .catch(err=>{
-            console.error(err)
+            console.log(err.message)
         })
 }
 
