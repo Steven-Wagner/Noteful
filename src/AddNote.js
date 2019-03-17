@@ -9,9 +9,9 @@ export default class AddNote extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: '',
+            notes_name: '',
             content: '',
-            folder: '',
+            folder_id: '',
             validName: false,
             validContent: false,
             validFolder: false,
@@ -28,7 +28,7 @@ export default class AddNote extends Component {
 
     nameChange(value) {
         this.setState({
-            name: value
+            notes_name: value
         }, ()=>{this.validateName(value)})
     }
 
@@ -40,7 +40,7 @@ export default class AddNote extends Component {
             hasError = true;
             errorMessages.name = 'Name must be greater than 2 characters'
         }
-        else if (this.context.notes.find(notes=>notes.name === value)) {
+        else if (this.context.notes.find(notes=>notes.notes_name === value)) {
             hasError = true;
             errorMessages.name = 'That name already exists';
         }
@@ -78,7 +78,7 @@ export default class AddNote extends Component {
 
     changeFolder(value) {
         this.setState({
-            folder: value,
+            folder_id: value,
             validFolder: true
         }, ()=>this.validateForm())
     }
@@ -93,10 +93,10 @@ export default class AddNote extends Component {
         e.preventDefault();
         let modDate = new Date().toISOString();
         const noteFolderId = this.context.folders.find(folder=>{
-            return folder.name === this.state.folder
+            return folder.name === this.state.folder_id
         }).id
-        const newNote = JSON.stringify({name: this.state.name, folderId: noteFolderId, id: this.state.name, content: this.state.content, modified: modDate})
-        fetch('http://localhost:9090/notes', {
+        const newNote = JSON.stringify({notes_name: this.state.notes_name, folder_id: noteFolderId, content: this.state.content, modified: modDate})
+        fetch('http://localhost:8000/api/notes', {
             method: 'POST',
             body: newNote,
             headers: {
@@ -110,11 +110,12 @@ export default class AddNote extends Component {
             throw new Error('Something went wrong')
         })
         .then(jres => {
-            this.context.addNote(this.state.name, this.state.content, noteFolderId)
+            console.log(jres)
+            this.context.addNote(jres.id, this.state.notes_name, this.state.content, noteFolderId)
             this.props.history.goBack();
         })
         .catch(err => {
-            console.log(err.message);
+            console.log(err);
             if (err.message === 'Failed to fetch') {
                 console.log('Did you start the noteful-json-server at localhost:9090?')
             }

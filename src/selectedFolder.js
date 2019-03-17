@@ -8,10 +8,10 @@ class SelectedFolder extends React.Component {
     render() {
 
         const currentNote = this.context.notes.find(note=>{
-            return note.id === this.props.match.params.noteId
+            return note.id === parseInt(this.props.match.params.noteId)
         })
         const currentFolder = this.context.folders.find(folder=> {
-            return folder.id === currentNote.folderId
+            return folder.id === currentNote.folder_id
         })
 
             

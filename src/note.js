@@ -9,7 +9,7 @@ export default class Note extends React.Component {
     render() {
 
         let note = this.context.notes.find(checkNote =>{
-            return checkNote.id === this.props.match.params.noteId
+            return checkNote.id === parseInt(this.props.match.params.noteId)
         })||"";
 
         return (

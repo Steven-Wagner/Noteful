@@ -13,7 +13,7 @@ function FolderThumbnail(props) {
 
 FolderThumbnail.propTypes = {
     data: PropTypes.exact({
-        id: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired
     })
 };

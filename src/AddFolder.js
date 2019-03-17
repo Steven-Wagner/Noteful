@@ -51,7 +51,7 @@ export default class AddFolders extends Component {
     createNewFolder(e, addFolder) {
         e.preventDefault();
         const folder = JSON.stringify({name: this.state.newFolder})
-        fetch(`http://localhost:9090/folders`, {
+        fetch(`http://localhost:8000/api/folders`, {
             method: 'POST',
             body: folder,
             headers: {
@@ -65,7 +65,7 @@ export default class AddFolders extends Component {
                 throw new Error('Sorry, something went wrong.')
             })
             .then(jres => {
-                addFolder(this.state.newFolder);
+                addFolder(this.state.newFolder, jres.id);
                 this.props.history.goBack();
             })
             .catch(err => {

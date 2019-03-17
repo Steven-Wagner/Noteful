@@ -9,7 +9,7 @@ export default class Folder extends React.Component {
 
     render() {
         const notes = this.context.notes.filter(note=>{
-            return note.folderId === this.props.match.params.folderId;
+            return note.folder_id === parseInt(this.props.match.params.folderId);
         })
         .map(thisFoldersNote=>{
             return <NoteError key={thisFoldersNote.id}><ThumbnailNote data={thisFoldersNote} key={thisFoldersNote.id} /></NoteError>

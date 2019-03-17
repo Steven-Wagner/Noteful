@@ -29,24 +29,23 @@ class App extends Component {
     })
   }
 
-  addFolder = newFolder => {
+  addFolder = (newFolder, folderId) => {
     this.setState({
-      folders: [{id:newFolder, name:newFolder}, ...this.state.folders]
+      folders: [{id:folderId, name:newFolder}, ...this.state.folders]
     })
   }
 
-  addNote = (noteName, noteContent, noteFolderId) => {
+  addNote = (noteId, noteName, noteContent, noteFolderId) => {
     let modDate = new Date();
     modDate = modDate.toISOString()
 
     this.setState({
-      notes: [...this.state.notes, {id: noteName, name: noteName, content: noteContent, folderId: noteFolderId, modified: modDate}]
+      notes: [...this.state.notes, {id: noteId, notes_name: noteName, content: noteContent, folder_id: noteFolderId, modified: modDate}]
     })
   }
 
   componentDidMount() {
-    console.log('component mounting');
-    const fetchFolders = fetch('http://localhost:9090/folders', {
+    const fetchFolders = fetch('http://localhost:8000/api/folders', {
       method: 'GET',
       headers: {
         'content-type': 'application/json'
@@ -64,7 +63,7 @@ class App extends Component {
       })
     })
 
-    const fetchNotes = fetch('http://localhost:9090/notes', {
+    const fetchNotes = fetch('http://localhost:8000/api/notes', {
       method: 'GET',
       headers: {
         'content-type': 'application/json'
